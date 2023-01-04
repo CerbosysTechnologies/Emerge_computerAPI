@@ -14,7 +14,7 @@ app.use(cors())
 
 
 
-const PORT=process.env.PORT||7560;
+const PORT=process.env.PORT||2022;
 app.listen(PORT,()=>{
     console.log("server runing at"+PORT)
 })
