@@ -1,4 +1,4 @@
-const CapacityModel = require("../Model/CapacityMode");
+const CapacityModel = require("../model/CapacityMode");
 exports.getCapacity=(req,res)=>{
     CapacityModel.getCapacityM((err,capacity)=>{
         if(err){
@@ -26,6 +26,7 @@ exports.CreateCapacity=(req,res)=>{
         console.log("valid data");
         Data.statusId=1;
         Data.creationDate= new Date;
+        Data.file.path;
         CapacityModel.addCapacity(Data,(err,capacity)=>{
           
            if(err){

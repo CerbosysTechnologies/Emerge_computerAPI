@@ -3,7 +3,7 @@
 
 
 const { query } = require("express");
-const ColorModel= require("../Model/colorModel");
+const ColorModel= require("../model/colorModel");
 
      // console.log("i am here");
      exports.getColorList=(req,res)=>{

@@ -1,11 +1,9 @@
 const pool = require("../../dbconnection/config");
-var Admin=function(admin){
+var Admin=function(admin,file){
     this.a_id=admin.a_id;
     this.Name=admin.Name;
     this.email=admin.email;
-    this.image=admin.image;
-
-
+    this.image=file;
     this.statusId=admin.statusId;
     this.createdById=admin.createdById;
     this.creationDate=admin.creationDate;
@@ -14,15 +12,15 @@ var Admin=function(admin){
     }
 
     // add new admin;
-Admin.addAdmin=(Data,result)=>{
-    pool.query('INSERT INTO admin SET ?',Data,(err,res)=>{
+Admin.addAdmin=function(Data,result){
+    pool.query('INSERT INTO admin SET ?',Data,function(err,res){
         if(err){
             console.log('Error while in login admin')
             result(null,err)
  }
         else{
             console.log("admin login");
-            result(null,res[0]);
+            result(null,res);
          }
     })
 }

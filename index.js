@@ -2,8 +2,9 @@
 const express= require('express');
 const multer=require('multer');
 const cors = require('cors');
+const path=require('path')
 const pool = require('./dbconnection/config.js');
-const router = require('./src/routes/Routes.js');
+const router = require('./src/routes/routes.js');
 
 
 const app=express();
