@@ -7,12 +7,15 @@ const { chechkToken } = require('../../auth/token_validation.js');
 const adminController = require('../controller/adminController.js');
 const CapacityController = require('../controller/CapacityController.js');
 const { getColorList, createColor,  getColorById, colorUpdate, deleteColorByid} = require('../controller/colorController.js');
-// // const enquirycontroller= require('../controller/enquiry.controller.js')
-// // const logincontroller=require('../controller/login.controller.js');
-// const categorycontroller=require('../controller/category.controller.js');
-// const category = require("../Model/Category.model.js");
-// const CategoryImage = require("../controller/Category.Controller.js");
+
+const enquirycontroller= require('../controller/enquiry.controller.js')
+const logincontroller=require('../controller/login.controller.js');
+const categorycontroller=require('../controller/category.controller.js');
+const category = require("../Model/Category.model.js");
+const CategoryImage = require("../controller/Category.Controller.js");
+
 //admin login
+ 
 const dir='./public/admin';
 const upload=multer({
     storage:multer.diskStorage({
@@ -24,7 +27,7 @@ const upload=multer({
         }
     })
 }).single("user_file")
-//user login
+//user login   
 const div ='./public/user';
 const uploaded=multer({
     storage:multer.diskStorage({
@@ -36,6 +39,12 @@ const uploaded=multer({
         }
     })
 }).single("image")
+
+
+
+
+
+
 //color Routes
 router.get('/getColor',chechkToken,getColorList);
 router.post('/addColor',chechkToken,createColor);
@@ -50,13 +59,19 @@ router.post('/capacitypost',chechkToken,CapacityController.CreateCapacity);
 router.get("/getcapacity/:Capacity_id",chechkToken,CapacityController.getCapacityById);
 router.put('/update/:s_no',chechkToken,CapacityController.UpdatecapacitybyId);
 router.delete('/capacitydelete/:s_no',CapacityController.capacityDelete);
-// user login  wale niche
+
+// user login  wale niche 
 router.post('/userlogin',logincontroller.createNewlogin)
+
 router.get('/getallenquiry',enquirycontroller.getenquirylist);
+  
  //create new enquiry post api
 router.post('/insertenquiry',enquirycontroller.createNewEnquiry);
-// Category api
+
+
+// Category api 
 router.post('/insertcategory',uploaded,categorycontroller.categorylogin);
+
 module.exports=router;
 
 

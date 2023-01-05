@@ -10,8 +10,6 @@ var pool = mysql.createPool({
     // insecureAuth : true
 
 }); 
-
-
 pool.getConnection(function (err, connection)  {
   if (err) {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
