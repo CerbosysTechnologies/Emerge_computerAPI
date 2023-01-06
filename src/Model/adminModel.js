@@ -1,4 +1,6 @@
 const pool = require("../../dbconnection/config");
+const path=require("path")
+
 var Admin=function(admin,file){
     this.a_id=admin.a_id;
     this.Name=admin.Name;
@@ -12,8 +14,8 @@ var Admin=function(admin,file){
     }
 
     // add new admin;
-Admin.addAdmin=function(Data,result){
-    pool.query('INSERT INTO admin SET ?',Data,function(err,res){
+Admin.addAdmin=function(data,result){
+    pool.query('INSERT INTO admin SET ?',data,function(err,res){
         if(err){
             console.log('Error while in login admin')
             result(null,err)
