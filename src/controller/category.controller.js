@@ -1,19 +1,35 @@
+const path = require("path");
+const category = require("../Model/Category.model.js");
 const categoryModel = require("../Model/Category.model.js");
+///
+exports.getcategorylist=(req,res)=>{
+    //console.log("here are the all employees list");
+    category.getAllcategory((err,category)=>{
+        console.log("we are here it call me again and i wroking");
+        if(err)
+        res.send(err)
+        console.log('category',category);
+        res.send(category)
 
+    })
+}
+
+
+///
 exports.categorylogin=(req,res)=>{
     console.log('categorymodel');
     console.log('req.body',req.body);
     var categorydata= new categoryModel(req.body)
-
-
    
-        categorydata.status_Id=1;
+    categorydata.image=req.file.path;
+     categorydata.status_Id=1;
         categorydata.creation_Date=new Date;
         categoryModel.createcategory(categorydata,(err,categorydata)=>{
             if(err){
                 res.send({status:400,success:false,message:"something went wrong"})
             }
             else{
+                console.log(req.body.path);
                 console.log(req.body);
                 console.log(categorydata);
                 res.send({status:200,success:true,message:"image uploaded"})

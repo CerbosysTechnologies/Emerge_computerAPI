@@ -27,6 +27,7 @@ const upload=multer({
     })
 }).single("user_file")
 //user login   
+//const upload = multer({ storage: storage })
 const div ='./public/user';
 const uploaded=multer({
     storage:multer.diskStorage({
@@ -34,7 +35,7 @@ const uploaded=multer({
             cb(null,div)
         },
         filename:function(req,file,cb){
-         cb(null, path.extname(file.originalname));
+         cb(null, file.originalname);
         }
     })
 }).single("image")
@@ -66,16 +67,12 @@ router.delete('/capacitydelete/:s_no',CapacityController.capacityDelete);
 
 // user login  wale niche 
 router.post('/userlogin',logincontroller.createNewlogin)
-
-router.get('/getallenquiry',enquirycontroller.getenquirylist);
-  
+router.get('/getallenquiry',enquirycontroller.getenquirylist);  
  //create new enquiry post api
 router.post('/insertenquiry',enquirycontroller.createNewEnquiry);
-
-
 // Category api 
 router.post('/insertcategory',uploaded,categorycontroller.categorylogin);
-
+router.get('/getallcategory',categorycontroller.getcategorylist);
 module.exports=router;
 
 
