@@ -3,18 +3,18 @@ const express=require('express');
 const path= require('path')
 const multer=require('multer');
 const router=express.Router();
-const { chechkToken } = require('../../auth/token_validation.js');
-const adminController = require('../controller/adminController.js');
-const CapacityController = require('../controller/CapacityController.js');
-const { getColorList, createColor,  getColorById, colorUpdate, deleteColorByid} = require('../controller/colorController.js');
+const { checktoken } = require('../../auth/token_validation.js');
+const adminController = require('../controller/admin.controller.js');
+const CapacityController = require('../controller/capacity.controller.js');
+const { getColorList, createColor,  getColorById, colorUpdate, deleteColorByid} = require('../controller/color.controller.js');
 
 const enquirycontroller= require('../controller/enquiry.controller.js')
 const logincontroller=require('../controller/login.controller.js');
 const categorycontroller=require('../controller/category.controller.js');
 const category = require("../Model/Category.model.js");
 const CategoryImage = require("../controller/Category.Controller.js");
-const { productlogin } = require('../controller/productcontroller.js');
-const productcontroller =require('../controller/productcontroller.js')
+const speedcontroller = require('../controller/speed.controller.js');
+const qualitytypecontroller= require('../controller/quality_type.controller.js');
 
 //admin login
  
@@ -63,30 +63,54 @@ const multiupload=multer({
 
 
 //color Routes
-router.get('/getColor',chechkToken,getColorList);
-router.post('/addColor',chechkToken,createColor);
-router.get('/get/:Color_id',chechkToken,getColorById);
-router.delete('/deleteColor/:s_no',chechkToken,deleteColorByid)
-router.put('/updateColor/:s_no',chechkToken,colorUpdate);
+router.get('/getColor',checktoken,getColorList);
+router.post('/addColor',checktoken,createColor);
+router.get('/get/:Color_id',checktoken,getColorById);
+router.delete('/deleteColor/:s_no',checktoken,deleteColorByid)
+router.put('/updateColor/:s_no',checktoken,colorUpdate);  
+
+
+
 //Admin login
 router.post('/login',upload,adminController.adminLoginM);
+
+
+
 //Capacity Routes
-router.get("/capacityget",chechkToken,CapacityController.getCapacity);
-router.post('/capacitypost',chechkToken,CapacityController.CreateCapacity);
-router.get("/getcapacity/:Capacity_id",chechkToken,CapacityController.getCapacityById);
-router.put('/update/:s_no',chechkToken,CapacityController.UpdatecapacitybyId);
-router.delete('/capacitydelete/:s_no',CapacityController.capacityDelete);
+router.get("/capacityget",checktoken,CapacityController.getCapacity);
+router.post('/capacitypost',checktoken,CapacityController.CreateCapacity);
+router.get("/getcapacity/:Capacity_id",checktoken,CapacityController.getCapacityById);
+router.put('/update/:s_no',checktoken,CapacityController.UpdatecapacitybyId);
+router.delete('/capacitydelete/:s_no',checktoken,CapacityController.capacityDelete);
+
+
 
 ////////// user//////user////user/////user/// login  wale niche 
 router.post('/userlogin',logincontroller.createNewlogin)
-router.get('/getallenquiry',enquirycontroller.getenquirylist);  
+router.get('/getallenquiry',enquirycontroller.getenquirylist); 
+
+
  //create new enquiry post api
 router.post('/insertenquiry',enquirycontroller.createNewEnquiry);
-// Category api 
+
+
+// Category ROutes
 router.post('/insertcategory',uploaded,categorycontroller.categorylogin);
 router.get('/getallcategory',categorycontroller.getcategorylist);
-router.post('/insertproduct',multiupload,productlogin);
-router.get('/getallproduct',productcontroller.getproductlist);
+
+
+//Speed Routes
+router.post('/insertspeed',speedcontroller.addspeed);
+router.get('/getspeed',speedcontroller.getspeed);
+router.get('/getspeedbyid/:speed_id',speedcontroller.getspeedbyid);
+// router.put('/updatespeed/:s_no',speedcontroller.updatespeed);
+
+
+//Quality Type
+router.get('/getQualityType',qualitytypecontroller.getQualityType);
+router.post('/insertqualitytype',qualitytypecontroller.addQualityType);
+
+
 
 module.exports=router;
 

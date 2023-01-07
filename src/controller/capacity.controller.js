@@ -1,11 +1,11 @@
-const CapacityModel = require("../model/CapacityMode");
+const capacitymodel = require("../model/capacity.model");
 exports.getCapacity=(req,res)=>{
-    CapacityModel.getCapacityM((err,capacity)=>{
+    capacitymodel.getCapacityM((err,capacity)=>{
         if(err){
-            res.send({status:400, success:false, message:"error while fetching Capacity", data:err})
+            res.send({status:400, success:false, message:"Error While Fetching Capacity", data:err})
         }
         else{
-            res.send({status:200,success:true,message:"Capacity details fetched successfully",data:capacity });
+            res.send({status:200,success:true,message:"Capacity Details Fetched Successfully",data:capacity });
         }
     })
 }
@@ -14,12 +14,12 @@ exports.getCapacity=(req,res)=>{
 exports.CreateCapacity=(req,res)=>{
     console.log('create capacity ');
     console.log('req.body',req.body);
-    const Data=new CapacityModel(req.body)
+    const Data=new  capacitymodel(req.body)
     if(!Data.Capacity_id){
-        return res.send({success:false, status:400, message:"please fill Capacity_id "})
+        return res.send({success:false, status:400, message:"Please Fill Capacity_id "})
     }
     else if(!Data.Capacity_Name){
-        return res.send({success:false, status:400, message:"please fill Capacity_name"})
+        return res.send({success:false, status:400, message:"Please Fill Capacity_name"})
 
     }
     else{
@@ -27,15 +27,15 @@ exports.CreateCapacity=(req,res)=>{
         Data.statusId=1;
         Data.creationDate= new Date;
         Data.file.path;
-        CapacityModel.addCapacity(Data,(err,capacity)=>{
+        capacitymodel.addCapacity(Data,(err,capacity)=>{
           
            if(err){
-                res.send({status:400,success:false, message:"someting went wrong",data:err})
+                res.send({status:400,success:false, message:"Someting Went Wrong",data:err})
             }
             
                 
                 else{
-                    res.send({status:200,success:true,message:"color inserting sucessfully",data:capacity})
+                    res.send({status:200,success:true,message:"Color Inserting Sucessfully",data:capacity})
                 }
             
              })
@@ -44,7 +44,7 @@ exports.CreateCapacity=(req,res)=>{
 exports.getCapacityById=(req,res)=>{
     // res.send("its for capacity by id");
     var Capacity_id=req.params.Capacity_id;
-    CapacityModel.getCapacityByidM([Capacity_id],(err,capacity)=>{
+    capacitymodel.getCapacityByidM([Capacity_id],(err,capacity)=>{
         if(err){
             res.send({status:400,success:false,message:'error while fetching capacity'});
         }
@@ -63,7 +63,7 @@ exports.UpdatecapacitybyId=function(req,res){
 
     Data.modifiedById=1;
     Data.modificationDate= new Date;
-    CapacityModel.UpdateCapacity([req.params.s_no],Data,function(err,capacity){
+    capacitymodel.UpdateCapacity([req.params.s_no],Data,function(err,capacity){
         if(err){
             res.send({status:400,success:false,message:"something went wrong"});
 
@@ -84,7 +84,7 @@ exports.UpdatecapacitybyId=function(req,res){
 }
 exports.capacityDelete=function(req,res){
     var s_no=req.params.s_no;
-    CapacityModel.capacityDeleteM(s_no,function(err,capacity){
+    capacitymodel.capacityDeleteM(s_no,function(err,capacity){
         if(err){
             res.send({status:400,success:false,message:'Error While Fetching Color'});
         }
