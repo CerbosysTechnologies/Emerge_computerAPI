@@ -13,6 +13,8 @@ const logincontroller=require('../controller/login.controller.js');
 const categorycontroller=require('../controller/category.controller.js');
 const category = require("../Model/Category.model.js");
 const CategoryImage = require("../controller/Category.Controller.js");
+const { productlogin } = require('../controller/productcontroller.js');
+const productcontroller =require('../controller/productcontroller.js')
 
 //admin login
  
@@ -39,7 +41,21 @@ const uploaded=multer({
          cb(null, file.originalname);
         }
     })
-}).single("image")
+}).single("image");
+
+///////for uploading multiple images in user account
+const divv ='./public/user';
+const multiupload=multer({
+    storage:multer.diskStorage({
+        destination:function(req,file,cb){
+            cb(null,div)
+        },
+        filename:function(req,file,cb){
+         cb(null, file.originalname);
+        }
+    })
+}).single('product_image')
+
 
 
 
@@ -61,7 +77,7 @@ router.get("/getcapacity/:Capacity_id",chechkToken,CapacityController.getCapacit
 router.put('/update/:s_no',chechkToken,CapacityController.UpdatecapacitybyId);
 router.delete('/capacitydelete/:s_no',CapacityController.capacityDelete);
 
-// user login  wale niche 
+////////// user//////user////user/////user/// login  wale niche 
 router.post('/userlogin',logincontroller.createNewlogin)
 router.get('/getallenquiry',enquirycontroller.getenquirylist);  
  //create new enquiry post api
@@ -69,6 +85,9 @@ router.post('/insertenquiry',enquirycontroller.createNewEnquiry);
 // Category api 
 router.post('/insertcategory',uploaded,categorycontroller.categorylogin);
 router.get('/getallcategory',categorycontroller.getcategorylist);
+router.post('/insertproduct',multiupload,productlogin);
+router.get('/getallproduct',productcontroller.getproductlist);
+
 module.exports=router;
 
 

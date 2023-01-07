@@ -28,14 +28,9 @@ category.getAllcategory=(result)=>{
         }
     })
 }
-
-
-
-
-
-
-  ///////////////
+///////////////
   console.log();
+  
 category.createcategory = function (category, result) {       
     pool.query("INSERT INTO category SET ?", category, function (err, res) {
             if(err) {

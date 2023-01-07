@@ -38,8 +38,6 @@ else{
         else{
             console.log(req.file.path)
 
-        
-            
             const jwttoken=jwt.sign({AdminModel:AdminModel.email},"12345")
             res.send({status:200, success:true, message:"Login Successful",data:Admindata,token:jwttoken})
                 }
