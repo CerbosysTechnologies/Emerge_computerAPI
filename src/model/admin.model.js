@@ -14,7 +14,7 @@ var Admin=function(admin,file){
     }
 
     // add new admin;
-Admin.addAdmin=function(data,result){
+Admin.adminlogin=function(data,result){
     pool.query('INSERT INTO admin SET ?',data,function(err,res){
         if(err){
             console.log('Error while in login admin')
