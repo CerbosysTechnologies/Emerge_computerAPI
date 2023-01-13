@@ -67,7 +67,7 @@ Capacity.UpdateCapacity=function(s_no,Data,result){
 Capacity.capacityDeleteM=function(s_no,result){
     pool.query("delete from capacity where s_no=?",[s_no],function(err,res){
         if (err) {
-            console.log("Error While Deleting Data");
+            console.log("error while deleting data");
             result(null, err);
           } else {
             result(null, res);

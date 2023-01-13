@@ -57,6 +57,80 @@ Product.createProduct = function (Product, result) {
         });           
 };
 
+Product.getEmployeeById=(product_id,result)=>{
+    
+    pool.query('SELECT * FROM product WHERE product_id=? ', [product_id],(err,res)=>{
+    if(err)
+    {
+        console.log('error while fetching the product by id',err);
+        result(err,null)
+    }
+    else{
+        console.log('respons ',res);
+        result(null,res)
+    }
+
+    })
+}
 
 
-module.exports=Product;
+// Product.updateproduct = function (s_no, productData, result) {
+//  // console.log(s_no);
+//   //console.log( productData);
+ 
+//  // console.log(productData);
+//         pool.query('update product set product_name =? where s_no =? ',[productData.product_name,s_no],
+//       function (err, res) {
+//         if (err) {
+//           console.log("Error While Updating product");
+//           result(null, err);
+//         } else {
+//           console.log("product Updated");
+//           result(null, res);
+//         }
+//       }
+//     );
+//   };
+//   module.exports=Product;
+
+
+Product.updateproduct =(product_id,productdata,result)=>{
+console.log(product_id,productdata,"here is the check");
+  pool.query('update product set product_name=?,product_description=?,product_type=?,product_brand=?,product_capacity=?,product_quality_type=?,product_colour=?,product_speed=?,product_tags=?,product_price=?,product_discount=?,product_discount_price=?,product_rent_price=?,product_rent_per_month=? where product_id=? ',[productdata.product_name,productdata.product_description,productdata.product_type,productdata.product_brand,productdata.product_capacity,productdata.product_quality_type,productdata.product_colour,productdata.product_speed,productdata.product_tags,productdata.product_price,productdata.product_discount,productdata.product_discount_price,productdata.product_rent_price,productdata.product_rent_per_month,productdata.product_id],
+  // pool.query('update product SET product_name=?,product_description=?, product_image=?,product_type=?,product_brand=?,product_capacity=?,product_quality_type=?,product_colour=?,product_speed=?,product_tags=?,product_price=?,product_discount=?,product_discount_price=?,product_rent_price=?,product_rent_per_month=? where product_id = ?',[productdata.product_name,productdata.product_description,productdata.product_image,productdata.product_type,productdata.product_brand ,productdata.product_capacity,productdata.product_quality_type,productdata.product_colour,productdata.product_speed,productdata.product_tags,productdata.product_price,productdata.product_discount,productdata.product_discount_price,productdata.product_rent_price,productdata.product_rent_price,productdata.product_rent_per_month,product_id],
+// pool.query('update product  SET product_name=?,product_description=?,product_type=?,product_brand=?,product_capacity=?,product_quality_type=?,product_colour=?,product_speed=?,product_tags=?,product_price=?,product_discount=?,product_discount_price=?,product_rent_price=?,product_rent_per_month=?where product_id=?',[productdata.product_name,productdata.product_description,productdata.product_image,productdata.product_type,productdata.product_brand ,productdata.product_capacity,productdata.product_quality_type,productdata.product_colour,productdata.product_speed,productdata.product_tags,productdata.product_price,productdata.product_discount,productdata.product_discount_price,productdata.product_rent_price,productdata.product_rent_per_month,productdata.product_id],
+    function(err,res){
+      console.log("resdfrdf",err,res);
+        if(err){
+            console.log('Error while updating the product');
+            
+            result(null, err);
+        }else{
+            //console.dir(req.body.task);
+          //  console.log("product updated successfully");
+            result(null, res);
+        }
+
+    })
+
+}
+Product.deleteproduct=(product_id, result)=>{
+    pool.query(
+        "delete from product where product_id=?",
+        [product_id],
+        function (err, res) {
+          if (err) {
+            console.log("error while deleting data");
+            result(null, err);
+          } else {
+            result(null, res);
+          }
+        }
+      );
+
+}
+
+
+
+
+ module.exports=Product;
