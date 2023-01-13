@@ -25,7 +25,7 @@ exports.createNewlogin =(req,res)=>{
 //  }
 
  if (req.body.constuctor === Object && Object.keys(req.body).length === 0) {
-    res.send(400).send({ status: false, message: "please fill fields" });
+    res.send(400).send({ status: false, message: "please fill number" });
 }
 else {
     console.log("vaild data success");

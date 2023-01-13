@@ -20,7 +20,7 @@ Color.getColor = (result) => {
       console.log("Color fetched successfully");
       result(null, res);
     }
-  })
+  });
 };
 // add new Color;
 Color.addNewColor = (ColorData, result) => {
