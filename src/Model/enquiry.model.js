@@ -12,9 +12,9 @@ var enquiry = function(enquiry){
   this.status = enquiry.status;
   this.statusId = enquiry.statusId;
   this.createdById = enquiry.createdById;
-  this.creationDate = new Date();
+  this.creationDate = enquiry.creationDate
   this.modifiedById = enquiry.modifiedById;
-  this.modificationDate = new Date();
+  this.modificationDate = enquiry.modificationDate 
 }
 enquiry.getAllenquiry=(result)=>{
     pool.query('SELECT * FROM enquiry',(err,res)=>{

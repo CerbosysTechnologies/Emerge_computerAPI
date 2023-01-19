@@ -1,64 +1,116 @@
+const K_mouse = require("../Model/k_mouse.model.js");
 const Monitor = require("../Model/monitor.model.js");
-const monitor = require("../Model/monitor.model.js");
+//const monitor = require("../Model/monitor.model.js");
 
-
-
-
-exports.getmonitorlist=(req,res)=>{
+//...................get all monitor list.......................//
+exports.getmonitorlist = (req, res) => {
   console.log("here are the all monitors list");
-//    this.product_image=req.file.path;
-Monitor.getAllMonitor((err,product)=>{
-      console.log("we are here it call me again and i wroking");
-      if(err)
-      res.send(err)
-      console.log('product',product);
-      res.send(product)
-  
-  })
-}
-//////////////
+  //    this.product_image=req.file.path;
+  Monitor.getAllMonitor((err, monitor) => {
+    if(err){
+      res.send({status:400, success:false, message:"error while fetching monitor", data:err})
+  }
+  else{
+      res.send({status:200,success:true,message:"monitor details fetched successfully",data:monitor });
+  }
+    
+    });
+};
+///////////////////////////////////////////////////////////////
 
-exports.getmonitorByID=(req,res)=>{
+//...................................get all monitor  by id..............//
+exports.getmonitorByID = (req, res) => {
   console.log("get monitor by id is here you get monitor ");
-  Monitor.getmonitorById(req.params.monitor_id,(err,monitor)=>{
-  if(err)
-  res.send(err)
-  console.log('single monitor data is here = ',monitor);
-  res.send(monitor)
+  Monitor.getmonitorById(req.params.monitor_id, (err, monitor) => {
+    if(err){
+      res.send({status:400,success:false,message:'error while fetching monitor'});
+  }
+  else
+  {
+    res.send({status:200,success:true,data:monitor, message:"monitor details fetched successfully"});
+  }
 
-})
+  });
+};
+
+/////////////////////////////////////////////////////
+
+//.......................................................
+exports.monitordetails = (req, res) => {
+  var monitordata = new Monitor(req.body);
+  var image = req.files;
+  if(!monitordata.monitor_id){
+    return res.send({success:false, status:400, message:"please fill monitor_id "})
 }
 
+else if(!monitordata.monitor_name){
+ return res.send({success:false,status:400,message:"please fill monitor name"})
+}
+else if(!monitordata.monitor_buy_at){
+  return res.send({success:false,status:400,message:"please enter buy prize"})
+ }
+ else if(!monitordata.description){
+  return res.send({success:false,status:400,message:"please enter description"})
+ }
+ else if(!monitordata.highlight_1){
+  return res.send({success:false,status:400,message:"please enter highlight ponits"})
+ }
+ 
 
-//////////////////
-exports.monitordetails = (req,res) => {
-  console.log(req.body);
-  console.log(req.files);
-  var monitordata= new monitor(req.body)
-    if (req.files["image_1"])
-    monitordata["image_1"] = req.files["image_1"][0].filename;
-//console.log(monitordata["image_1"])
-    if (req.files["image_2"])
-        monitordata["image_2"] = req.files["image_2"][0].filename;
-        //console.log(monitordata["image_2"])
-   if (req.files["image_3"])
-        monitordata["image_3"] = req.files["image_3"][0].filename;
-        //console.log(monitordata["image_3"])
-  if (req.files["image_4"])
-        monitordata["image_4"] = req.files["image_4"][0].filename;
-  //monitordata.status_Id = 4;
-  monitordata.creation_Date = new Date();
-  console.log(monitordata,"hemant22222222222");
-  Monitor.addmonitor(monitordata, (err, monitordata) => {
-    if (err) {
-      console.log(err,"cheking is here hemant");
-      res.send({
-        
-        status: 400,success: false,message: "something went wrong",
-      });
-    } else {
-      console.log(monitordata,"hemant22222222222");
-      res.send({ status: 200, success: true, message: "image uploaded" });
-    }
+else{
+  monitordata.statusId=1;
+        monitordata.creationDate= new Date;
+  var jointdata = "";
+  for (let key of image) {
+    jointdata = jointdata + key.filename + ",";
+  }
+
+  var data = jointdata;
+  monitordata.statusId=1;
+  monitordata.creationDate= new Date;
+  Monitor.addmonitor(data, monitordata, function (err, result) {
+    if(err){
+      res.send({status:400,success:false, message:"someting went wrong",data:err})
+  }
+  else{
+          res.send({status:200,success:true,message:"monitor inserting sucessfully",data:monitordata})
+      } 
+    
   });
+}
+};
+
+//////////////////////////////////////////////////////
+
+
+exports.updatemonitor = (req, res) => {
+  var image = req.files;
+  var mousedata = new K_mouse(req.body);
+  
+  mousedata.modifiedById=1;
+  mousedata.modificationDate= new Date;
+
+  var jointdata = ",";
+  for (let key of image) {
+    jointdata = jointdata + key.filename + ",";
+  }
+  var data = jointdata;
+  Monitor.updateMonitor(req.params.monitor_id,mousedata,data,
+    function (err, result) {
+      if(err){
+        res.send({status:400,success:false,message:"something went wrong"});
+
+    }
+    else if(result.length==0){ 
+
+        res.send({status:200,success:true,message:"No Detail Available"});
+
+    } 
+    else{
+    
+        res.send({status:200,success:true,message:"result updated", data:result});
+        
+    }
+    }
+  );
 };
