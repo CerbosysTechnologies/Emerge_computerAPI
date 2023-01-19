@@ -20,9 +20,9 @@ var Product=  function(Product,file){
     this.product_rent_price = Product.product_rent_price;
     this.product_rent_per_month = Product.product_rent_per_month;
     this.createdById = Product.createdById;
-    this.creation_Date = new Date();
+    this.creation_Date = Product.creation_Date;
     this.modifiedById = Product.modifiedById;
-    this.modificationDate = new Date();
+    this.modificationDate = Product.modificationDate;
   }
 //////
 Product.getAllproduct=(result)=>{
@@ -97,8 +97,7 @@ Product.getEmployeeById=(product_id,result)=>{
 Product.updateproduct =(product_id,productdata,result)=>{
 console.log(product_id,productdata,"here is the check");
   pool.query('update product set product_name=?,product_description=?,product_type=?,product_brand=?,product_capacity=?,product_quality_type=?,product_colour=?,product_speed=?,product_tags=?,product_price=?,product_discount=?,product_discount_price=?,product_rent_price=?,product_rent_per_month=? where product_id=? ',[productdata.product_name,productdata.product_description,productdata.product_type,productdata.product_brand,productdata.product_capacity,productdata.product_quality_type,productdata.product_colour,productdata.product_speed,productdata.product_tags,productdata.product_price,productdata.product_discount,productdata.product_discount_price,productdata.product_rent_price,productdata.product_rent_per_month,productdata.product_id],
-  // pool.query('update product SET product_name=?,product_description=?, product_image=?,product_type=?,product_brand=?,product_capacity=?,product_quality_type=?,product_colour=?,product_speed=?,product_tags=?,product_price=?,product_discount=?,product_discount_price=?,product_rent_price=?,product_rent_per_month=? where product_id = ?',[productdata.product_name,productdata.product_description,productdata.product_image,productdata.product_type,productdata.product_brand ,productdata.product_capacity,productdata.product_quality_type,productdata.product_colour,productdata.product_speed,productdata.product_tags,productdata.product_price,productdata.product_discount,productdata.product_discount_price,productdata.product_rent_price,productdata.product_rent_price,productdata.product_rent_per_month,product_id],
-// pool.query('update product  SET product_name=?,product_description=?,product_type=?,product_brand=?,product_capacity=?,product_quality_type=?,product_colour=?,product_speed=?,product_tags=?,product_price=?,product_discount=?,product_discount_price=?,product_rent_price=?,product_rent_per_month=?where product_id=?',[productdata.product_name,productdata.product_description,productdata.product_image,productdata.product_type,productdata.product_brand ,productdata.product_capacity,productdata.product_quality_type,productdata.product_colour,productdata.product_speed,productdata.product_tags,productdata.product_price,productdata.product_discount,productdata.product_discount_price,productdata.product_rent_price,productdata.product_rent_per_month,productdata.product_id],
+ 
     function(err,res){
       console.log("resdfrdf",err,res);
         if(err){

@@ -6,9 +6,9 @@ var login = function(login){
     this.mobile_number = login.mobile_number;
     this.statusId = login.statusId;
     this.createdById = login.createdById;
-    this.creationDate = new Date();
+    this.creationDate = login.creationDate
     this.modifiedById = login.modifiedById;
-    this.modificationDate = new Date();
+    this.modificationDate = login.modificationDate
   }
   login.createlogin=(loginReqdata,result)=>{
     pool.query('INSERT INTO login SET ?',loginReqdata,(err,res)=>{

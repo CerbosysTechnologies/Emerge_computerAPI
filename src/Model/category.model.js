@@ -11,9 +11,9 @@ var category = function(category,images){
     this.status = category.status;
     this.status_Id = category.status_Id;
     this.createdById = category.createdById;
-    this.creation_Date = new Date();
+    this.creation_Date = category.creation_Date
     this.modifiedById = category.modifiedById;
-    this.modificationDate = new Date();
+    this.modificationDate = category.modificationDate
   }
 /////
 category.getAllcategory=(result)=>{

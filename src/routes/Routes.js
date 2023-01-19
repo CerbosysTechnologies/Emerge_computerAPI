@@ -2,6 +2,7 @@
 const express=require('express');
 const path= require('path')
 const multer=require('multer');
+const util =require('util');
 const router=express.Router();
 const { chechkToken } = require('../../auth/token_validation.js');
 const adminController = require('../controller/adminController.js');
@@ -19,7 +20,9 @@ const deleteproductbyid =require('../controller/productcontroller.js');
 const monitorcontroller =require('../controller/monitorcontroller.js')
 const getproductlist = require('../controller/monitorcontroller.js')
 const getmonitorByID =require('../controller/monitorcontroller.js')
-
+const laptopdetails = require('../controller/laptop.controller')
+const laptopcontroller= require('../controller/laptop.controller')
+const mousecontroller = require('../controller/k_mouse.controller.js')
 
 
 //admin login
@@ -50,59 +53,64 @@ let uploaded=multer({
 }).single("image");
 
 //.........................for uploading  images in user account...................
-const divv ='./public/user';
+const divv ='./public/product';
 let multiupload=multer({
     storage:multer.diskStorage({
         destination:function(req,file,cb){
-            cb(null,div)
+            cb(null,divv)            
         },
         filename:function(req,file,cb){
+            console.log('FileName', file.originalname);
          cb(null, file.originalname);
         }
     })
 }).single('product_image')
+//.........................images upload os monitor..................
+var storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, path.join ('./public/monitor_image')
+  )},
+  filename:function(req,file,cb){
+    cb(null,file.originalname)
+    //console.log(file,"hedgfsfsdfg")
+  }
+  });
+  var upload_2 = multer({ storage: storage }).array("image",10);
+  var uploadFilesMiddleware = util.promisify(upload_2);
+  module.exports = uploadFilesMiddleware;
+//////////////////////////////////////////////////////////////////////
 
-//...........................for monitor images............................
-// const storage = multer.diskStorage({
-//     destination: './upload/images',
-//     filename: (req, file, cb) => {
-//         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-//     }
-// });
-// const upload = multer({
-//     storage: storage,
-// }).fields([{
-//     name: 'image_1',
-//     maxCount: 1
-// }, {
-//     name: 'image_2',
-//     maxCount: 1
-// }]);
- const storage=multer.diskStorage({
-        destination:'./public/user/monitor_image',
-        filename:function(req,file,cb){
-         cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-        }
-    });
-const multi = multer({
-    storage: storage,
-}).fields([{
-    name: 'image_1',
-    maxCount: 1
-}, {
-    name: 'image_2',
-    maxCount: 1
-},
-{
-    name: 'image_3',
-    maxCount: 1
-},{
-    name: 'image_4',
-    maxCount: 1
-},
+//.......................................................laptop images...........................................
+var storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, path.join ('./public/monitor_image')
+  )},
+  filename:function(req,file,cb){
+    cb(null,file.originalname)
+    //console.log(file,"hedgfsfsdfg")
+  }
+  });
+  var upload_3 = multer({ storage: storage }).array("image",10);
+  var uploadlaptopMiddleware = util.promisify(upload_3);
+  module.exports = uploadlaptopMiddleware;
 
-]);
+/////////////////////////////////////////////////////////
 
+//.............................................keyboard and mouse images....................................
+var storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, path.join ('./public/monitor_image')
+  )},
+  filename:function(req,file,cb){
+    cb(null,file.originalname)
+    //console.log(file,"hedgfsfsdfg")
+  }
+  });
+  var upload_4 = multer({ storage: storage }).array("image",10);
+  var uploadmouseMiddleware = util.promisify(upload_4);
+  module.exports = uploadmouseMiddleware;
+
+/////////////////////////////////////////////////////////
 
 
 
@@ -129,15 +137,30 @@ router.post('/insertenquiry',enquirycontroller.createNewEnquiry);
 // Category api 
 router.post('/insertcategory',uploaded,categorycontroller.categorylogin);
 router.get('/getallcategory',categorycontroller.getcategorylist);
+//............................product api.................................
 router.post('/insertproduct',multiupload,productlogin);
 router.get('/getallproduct',productcontroller.getproductlist);
 router.get('/getemployeeById/:product_id',productcontroller.getEmployeeByID)
-router.put('/productupdate/:product_id',productcontroller.updateProduct)
+router.patch('/productupdate/:product_id',multiupload,productcontroller.updateProduct)
 router.delete('/deleteproduct/:product_id',productcontroller.deleteproductbyid)
 //..................... moniter api.............................................................
-router.post('/insertmonitor',multi,monitorcontroller.monitordetails)
+router.post('/insertmonitor',uploadFilesMiddleware,monitorcontroller.monitordetails)
 router.get('/getallmonitor',monitorcontroller.getmonitorlist)
 router.get('/getmonitorById/:monitor_id',monitorcontroller.getmonitorByID)
+router.put('/monitorupdate/:monitor_id',uploadFilesMiddleware,monitorcontroller.updatemonitor)
+
+//....................Laptop api...............................................................
+router.post('/insertlaptop',uploadlaptopMiddleware,laptopcontroller.laptopdetails)
+router.get('/getallLaptop',laptopcontroller.getlaptoplist)
+router.get('/getlaptopById/:laptop_id',laptopcontroller.getlaptopByID)
+router.put('/laptopupdate/:laptop_id',uploadlaptopMiddleware,laptopcontroller.updatelaptop)
+
+//.................keyboard and mouse api...............................
+router.post('/insertmouse',uploadmouseMiddleware,mousecontroller.k_mousedetails)
+router.get('/getallmouse',mousecontroller.getmouselist)
+router.get('/getmouseById/:id',mousecontroller.getmouseByID)
+router.put('/mouseupdate/:id',uploadmouseMiddleware,mousecontroller.updatemouse)
+
 
 
 module.exports=router;
