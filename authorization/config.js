@@ -13,18 +13,18 @@ var pool = mysql.createPool({
 pool.getConnection(function (err, connection)  {
   if (err) {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.error('Database connection was closed.')
+      console.error('Database Connection Was Closed.')
     }
     if (err.code === 'ER_CON_COUNT_ERROR') {
-      console.error('Database has too many connections.')
+      console.error('Database Has Too Many Connections.')
     }
     if (err.code === 'ECONNREFUSED') {
-      console.error('Database connection was refused.' + err)
+      console.error('Database Connection Was Refused.' + err)
     }
   }
 
   if (connection){
-    console.log("connected")
+    console.log("Connected")
     connection.release();
     return;
   }
