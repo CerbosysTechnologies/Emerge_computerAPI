@@ -1,11 +1,11 @@
 const mysql=require('mysql')
 var pool = mysql.createPool({
-    connectionLimit : 100, //important    
-    host     : 'localhost',
-    port     :  3306,
-    user     : 'root',
-    password : 'root',
-    database : 'new_emergedb',
+  connectionLimit : 100, //important    
+  host     : 'localhost',
+  port     :  3306,
+  user     : 'root',
+  password : 'root',
+  database : 'emergedb',
     // debug    :  false,
     // insecureAuth : true
 
