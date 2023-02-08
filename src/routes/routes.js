@@ -2,13 +2,9 @@ const express=require('express');
 const passport=require('passport');
 require('../../authorization/passport')(passport)
 const router = express.Router();
-
-
-const adminController = require("../controllers/admin.controller");
 const colorController = require('../controllers/color.controller');
-const logincontroller=  require('../controllers/login.controller.js');
 const adminController = require("../controllers/admin.controller"); 
-const logincontroller=  require('../controllers/login.controller.js')
+const logincontroller=  require('../controllers/login.controller')
 const enquirecontroller = require('../controllers/enquiry.controller.js')
 
 //Admin Routes
@@ -22,10 +18,9 @@ router.get("/getColorById/:color_id",colorController.getColorById);
 router.put("/updateColorById/:color_id",colorController.updateColor);
 
 
-router.post('/login',logincontroller.adminlogin)
 
 // User Routes
-router.post('/login',logincontroller.createlogin)
+router.post('/userLogin',logincontroller.userLogin)
 router.post('/enquiry',enquirecontroller.createNewEnquiry)
 router.get('/getallenquiry',enquirecontroller.getenquirylist)
 

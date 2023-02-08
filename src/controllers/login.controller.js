@@ -1,7 +1,7 @@
 const login = require("../models/login.model.js");
 
 
-exports.adminlogin =(req,res)=>{
+exports.userLogin =(req,res)=>{
 
     console.log(req.body);
     var loginReqdata = new login(req.body)
