@@ -1,24 +1,25 @@
 const express=require('express')
 const router = express.Router();
 
-const adminController = require("../controllers/admin.controller");
+const adminController = require("../controllers/admin.controller"); 
+const logincontroller=  require('../controllers/login.controller.js')
+const enquirecontroller = require('../controllers/enquiry.controller.js')
 
 //Admin Routes
 router.post("/postadmin",adminController.adminlogin)
 
 
-module.exports=router;
-const express =require('express')
-const logincontroller=  require('../controllers/login.controller.js')
 
-
-
-
+// User Routes
 router.post('/login',logincontroller.createlogin)
-
-// there is routs 
-
-
+router.post('/enquiry',enquirecontroller.createNewEnquiry)
+router.get('/getallenquiry',enquirecontroller.getenquirylist)
 
 
-module.exports= router;
+// payment gateway
+
+
+
+
+
+module.exports = router;
