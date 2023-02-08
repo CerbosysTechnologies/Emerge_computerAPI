@@ -7,6 +7,9 @@ const router = express.Router();
 const adminController = require("../controllers/admin.controller");
 const colorController = require('../controllers/color.controller');
 const logincontroller=  require('../controllers/login.controller.js');
+const adminController = require("../controllers/admin.controller"); 
+const logincontroller=  require('../controllers/login.controller.js')
+const enquirecontroller = require('../controllers/enquiry.controller.js')
 
 //Admin Routes
 router.post("/adminLogin",adminController.adminlogin);
@@ -19,17 +22,18 @@ router.get("/getColorById/:color_id",colorController.getColorById);
 router.put("/updateColorById/:color_id",colorController.updateColor);
 
 
-
-
-
-
-
-
 router.post('/login',logincontroller.adminlogin)
 
-// there is routs 
+// User Routes
+router.post('/login',logincontroller.createlogin)
+router.post('/enquiry',enquirecontroller.createNewEnquiry)
+router.get('/getallenquiry',enquirecontroller.getenquirylist)
+
+
+// payment gateway
 
 
 
 
-module.exports= router;
+
+module.exports = router;

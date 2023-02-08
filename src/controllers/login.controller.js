@@ -46,7 +46,7 @@ exports.adminlogin =(req,res)=>{
             else
             {
 console.log("welcome =",+mobile_number);
-res.send({ status: false, message:"welcome =", mobile_number });
+res.send({ status: true, message:"welcome", mobile_number });
 
             }
 
