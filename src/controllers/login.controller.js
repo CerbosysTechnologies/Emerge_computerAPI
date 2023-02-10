@@ -28,6 +28,7 @@ exports.userLogin =(req,res)=>{
             if(err) throw err
             else
             console.log(result)
+            //console.log(result,"hereeeererererererrereerr");
 
            if(result==0)
             {
