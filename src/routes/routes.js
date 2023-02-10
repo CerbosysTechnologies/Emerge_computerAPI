@@ -26,6 +26,12 @@ const colorController = require('../controllers/color.controller');
 const adminController = require("../controllers/admin.controller"); 
 const logincontroller=  require('../controllers/login.controller')
 const enquirecontroller = require('../controllers/enquiry.controller.js')
+const visitorcontroller =require('../controllers/visitor.controller')
+const searchcontroller = require('../controllers/search.controller')
+
+const productTypeController= require('../controllers/product_type.controller');
+const speedController = require('../controllers/speed.controller');
+const qualityTypeController = require('../controllers/quality_type.model');
 
 //Admin Routes
 router.post("/adminLogin",adminController.adminlogin);
