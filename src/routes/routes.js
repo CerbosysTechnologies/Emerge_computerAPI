@@ -1,13 +1,7 @@
 const express=require('express');
 const passport=require('passport');
 const multer=require('multer');
-
-
 require('../../authorization/passport')(passport)
-
-
-
-
 const DIR = './public/product_type';
 let storage = multer.diskStorage({	
     destination: function (req, file, callback) {
