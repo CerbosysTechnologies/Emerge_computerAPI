@@ -1,5 +1,3 @@
-
-
 const jwt = require("jsonwebtoken");
 const adminModel = require("../models/admin.model");
 exports.adminlogin = function (req, res) {

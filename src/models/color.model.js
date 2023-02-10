@@ -3,7 +3,8 @@ const pool = require('../../authorization/config');
 
 
 
-var Color = function (color) {
+
+const Color = function (color) {
     this.color_id = color.color_id;
     this.color_name = color.color_name;
     this.status = color.status;

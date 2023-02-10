@@ -1,4 +1,4 @@
- require("../../authorization/passport")
+
 const colorModel = require("../models/color.model")
 const passport = require('passport');
 require("../../authorization/passport")(passport)
@@ -44,14 +44,14 @@ exports.addColor=function(req,res,next){
 module.exports.getAllColor = function(req,res,next)
 
 {
-    // res.send({message:"its for testing"});
-    passport.authenticate('jwt',function(err,admin)
-    {
-        if (err || !admin) 
-        {          
-            return res.json({ status: 401, success: false, message: "Authentication Fail." });
-        }
-        else if(admin){ 
+    
+    // passport.authenticate('jwt',function(err,admin)
+    // {
+    //     if (err || !admin) 
+    //     {          
+    //         return res.json({ status: 401, success: false, message: "Authentication Fail." });
+    //     }
+    //     else if(admin){ 
             colorModel.getAllColorM(function(err,data){
                 if(err){
                     res.send({status:400,success:false,message:"No Color Found"});
@@ -65,20 +65,20 @@ module.exports.getAllColor = function(req,res,next)
                 }
             });
       }
-  })(req,res,next)
-}
+//   })(req,res,next)
+// }
 
 
 
 module.exports.getColorById = function(req,res,next)
 {
-    passport.authenticate('jwt',function(err,admin)
-    {
-        if (err || !admin) 
-        {          
-            return res.json({ status: 401, success: false, message: "Authentication Fail." });
-        }
-        else if(admin){ 
+    // passport.authenticate('jwt',function(err,admin)
+    // {
+    //     if (err || !admin) 
+    //     {          
+    //         return res.json({ status: 401, success: false, message: "Authentication Fail." });
+    //     }
+    //     else if(admin){ 
             colorModel.getColorByIdM(req.params.color_id,function(err,data){
                 if(err){
                     res.send({status:400,success:false,message:"No Detail Found"});
@@ -92,8 +92,8 @@ module.exports.getColorById = function(req,res,next)
                 }
             });
        }
-  })(req,res,next)
-};
+//   })(req,res,next)
+// };
 
 
 
