@@ -22,6 +22,10 @@ exports.createNewEnquiry =(req,res)=>{
     }
      
      else{
+        
+        enquiryReqdata.statusId=1;
+        enquiryReqdata.creationDate=new Date()
+        enquiryReqdata.modificationDate=new Date()
          console.log("vaild data success");
          enquiry.createEnquiry(enquiryReqdata,(err,enquiry)=>{
              if(err)

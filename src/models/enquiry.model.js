@@ -1,7 +1,7 @@
 const pool = require("../../authorization/config.js");
 
 var enquiry = function(enquiry){
-    this.s_no = enquiry.s_no
+    this.enquiry_id = enquiry.enquiry_id
     this.name = enquiry.name;
     this.mobile_number = enquiry.mobile_number;
     this.category = enquiry.category;
