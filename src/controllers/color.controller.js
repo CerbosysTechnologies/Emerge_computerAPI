@@ -24,7 +24,7 @@ exports.addColor=function(req,res,next){
 
                 colorModel.addColorM(colordata,(err,color)=>{
                     if(err){
-                        res.send({status:400,success:false,message:data.message});
+                        res.send({status:400,success:false,message:color.message});
                     }
                     else{
                         res.send({status:200,success:true,message:color.message, color_id: color.color_id,data:color});

@@ -49,7 +49,7 @@ Color.addColorM = function (color, result) {
 
 
 Color.getAllColorM = function (result) {       
-    pool.query("select * from color where status=1", function (err, res) {
+    pool.query("select * from color where status=1 order by color_id desc", function (err, res) {
             if(err) {
                 console.log(err);
                 result(err, null);

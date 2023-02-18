@@ -49,13 +49,13 @@ module.exports.insertSpeed= function(req,res,next)
 module.exports.getAllSpeed = function(req,res,next)
 
 {
-    passport.authenticate('jwt',function(err,admin)
-    {
-        if (err || !admin) 
-        {          
-            return res.json({ status: 401, success: false, message: "Authentication Fail." });
-        }
-        else if(admin){ 
+    // passport.authenticate('jwt',function(err,admin)
+    // {
+    //     if (err || !admin) 
+    //     {          
+    //         return res.json({ status: 401, success: false, message: "Authentication Fail." });
+    //     }
+    //     else if(admin){ 
             speedModel.getAllSpeedM(function(err,data){
                 if(err){
                     res.send({status:400,success:false,message:"No Speed Details Found"});
@@ -69,8 +69,8 @@ module.exports.getAllSpeed = function(req,res,next)
                 }
             });
       }
-  })(req,res,next)
-}
+//   })(req,res,next)
+// }
 
 // Get Speed ById
 module.exports.getSpeedById = function(req,res,next)

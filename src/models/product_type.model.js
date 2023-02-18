@@ -32,7 +32,7 @@ const ProductType = function(producttype, file) {
 
   //Get All Product Type
 ProductType.getAllProductTypeM = function (result) {       
-    pool.query(`select * from product_type Where status=1 `, function (err, res) {
+    pool.query(`select * from product_type Where status=1 order by product_type_id desc `, function (err, res) {
             if(err) {
                 console.log(err);
                 result(err, null);
@@ -60,54 +60,52 @@ ProductType.getProductTypeByIdM = function (product_type_id, result) {
 
 
 
+//update Product_type
 
+ProductType.updateProductType = function(id,pt,result) {
+    var update_query, value;
+    pool.query(`select * from product_type where product_type_id=${id}`,function(err, data){
+        if(err){
+            console.log(err);
+            result(err, null);
+        }
+        else{
+            console.log(data.length);
+            if(data.length>0)
+            {
+                if(pt.image !== undefined){
+                    update_query = `update product_type SET product_type_name=?, image=?, modifiedById=?, 
+                    modificationDate=? where product_type_id=?`;
 
-// //Update ProductType
+                    value = [pt.product_type_name, pt.image,pt.modifiedById, pt.modificationDate, id];
+                }
+                else{
+                    update_query = `update product_type SET product_type_name=?, modifiedById=?, 
+                    modificationDate=? where product_type_id=?`;
 
-// ProductType.updateProductTypeM = function(id,pt,result) {
-//     var update_query, value;
-//     pool.query(`select * from product_type where product_type_id=${id}`,function(err, data){
-//         if(err){
-//             console.log(err);
-//             result(err, null);
-//         }
-//         else{
-        
-//             if(data.length>0)
-//             {
-//                 if(pt.image !== undefined){
-//                     update_query = `update product_type SET product_type_name
-//                     =?, image=?, modifiedById=?, 
-//                     modificationDate=? where product_type_id=?`;
-
-//                     value = [pt.product_type_name, pt.image,pt.modifiedById, pt.modificationDate, id];
-//                 }
-//                 else{
-//                     update_query = `update product_type SET product_type_name=?, modifiedById=?, 
-//                     modificationDate=? where product_type_id=?`;
-
-//                     value = [pt.product_type_name,pt.modifiedById, pt.modificationDate, id];
-//                 }
-//                 pool.query(update_query, value, function (err, res) 
-//                 {
-//                     if(err) 
-//                     {
-//                         console.log(err);
-//                         result(err, null);
-//                     }
-//                     else
-//                     {                       
-//                             result(null, {status:200,success:true,message:"Details Updated Successfully."});
+                    value = [pt.product_type_name,pt.modifiedById, pt.modificationDate, id];
+                }
+                pool.query(update_query, value, function (err, res) 
+                {
+                    if(err) 
+                    {
+                        console.log(err);
+                        result(err, null);
+                    }
+                    else
+                    {                       
+                            result(null, {status:200,success:true,message:"Details Updated Successfully."});
             
-//                     }
-//                 });
+                    }
+                });
 
-//             }
+            }
 
-//         }
-//     });
+        }
+    });
            
-// };
+};
+
 
 
 
