@@ -29,19 +29,17 @@ enquiry.createEnquiry=(enquiryReqdata,result)=>{
         
     }
 
-    enquiry.getAllenquiry=(result)=>{
-        pool.query('SELECT * FROM enquiry',(err,res)=>{
-            if(err){
-                console.log("err is occure while fetching data",err);
-                result(null,err);
-            }
-            else{
-                console.log("employee fetching sucessfully");
-                result(null,res);
-            }
-        })
+    enquiry.getAllEnquiry= function (result) {
+        pool.query("select * from enquiry where  order by enquiry_id desc", function (err, res) {
+                if(err) {
+                    console.log(err);
+                    result(err, null);
+                }
+                else{
+                    result(null, res);
+                }
+            });
     }
-
 
     
     module.exports=enquiry;

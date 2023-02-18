@@ -1,6 +1,7 @@
 const express=require('express');
 const passport=require('passport');
 const multer=require('multer');
+const util =require('util');
 
 
 require('../../authorization/passport')(passport)
@@ -9,7 +10,7 @@ require('../../authorization/passport')(passport)
 
 
 const DIR = './public/product_type';
-let storage = multer.diskStorage({	
+var storage = multer.diskStorage({	
     destination: function (req, file, callback) {
       callback(null, DIR);        
     },
@@ -19,6 +20,27 @@ let storage = multer.diskStorage({
  	}
 });
 let upload = multer({storage: storage});
+
+
+//////////////////////
+
+
+//.............................................Gaming cpu images....................................
+var storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, path.join ('')
+)},
+filename:function(req,file,cb){
+  cb(null,file.originalname)
+  //console.log(file,"hedgfsfsdfg")
+}
+});
+var upload_5 = multer({ storage: storage }).array("image",10);
+var uploadgcpuMiddleware = util.promisify(upload_5);
+module.exports = uploadgcpuMiddleware;
+
+/////////////////////////////////////////////////////////
+
 
 
 const router = express.Router();
@@ -32,6 +54,11 @@ const searchcontroller = require('../controllers/search.controller')
 const productTypeController= require('../controllers/product_type.controller');
 const speedController = require('../controllers/speed.controller');
 const qualityTypeController = require('../controllers/quality_type.model');
+const productcontroller = require('../controllers/addproduct.controller')
+const ordercontroller = require('../controllers/orderdetails.controller.js')
+const paymentcontroller=require('../controllers/paymentdetails.controller')
+const orderdetailcontroller = require('../controllers/orderdetails.controller')
+const ordercontrollerr=require("../controllers/order.controller")
 
 //Admin Routes
 router.post("/adminLogin",adminController.adminlogin);
@@ -60,14 +87,31 @@ router.put("/updateSpeed/:speed_id",speedController.updateSpeed);
 //Quality Type
 router.post("/insertQualityType",qualityTypeController.insertQualityType)
 
-
+//add product
+router.post("/addproduct",uploadgcpuMiddleware,productcontroller.productadd)
 
 // User Routes
 router.post('/userLogin',logincontroller.userLogin)
 router.post('/enquiry',enquirecontroller.createNewEnquiry)
-router.get('/getallenquiry',enquirecontroller.getenquirylist)
+router.get("/getAllEnquiry",enquirecontroller.getAllEnquiry);
+
 router.post('/visitor',visitorcontroller.visitorLogin)
 router.get('/searchproduct',searchcontroller.searchProduct)
+//..............orderdetails Api......................
+router.post('/insertOrderDetail',orderdetailcontroller.insertOrderdetail)
+
+
+//..............payment chechkout details......................
+router.get('/paymentdetails',paymentcontroller.getpaymentdetails)
+
+//-------------------order api-----------------------------------
+router.post("/insertorder",ordercontrollerr.createorder)
+
+
+
+
+
+
 
 
 
