@@ -24,6 +24,10 @@ exports.createNewEnquiry =(req,res)=>{
     }
      
      else{
+        
+        enquiryReqdata.statusId=1;
+        enquiryReqdata.creationDate=new Date()
+        enquiryReqdata.modificationDate=new Date()
          console.log("vaild data success");
          enquiry.createEnquiry(enquiryReqdata,(err,enquiry)=>{
              if(err)
@@ -34,31 +38,41 @@ exports.createNewEnquiry =(req,res)=>{
      }
  }
 
-// Get All Enquiry
-module.exports.getAllEnquiry= function(req,res,next)
+ module.exports.getAllEnquiry= function(req,res,next)
+ {
+     passport.authenticate('jwt',function(err,admin)
+     {
+         if (err || !admin)
+         {
+             return res.json({ status: 401, success: false, message: "Authentication Fail." });
+         }
+         else if(admin){
+           enquiry.getAllEnquiry(function(err,data){
+                 if(err){
+                     res.send({status:400,success:false,message:"No Enquiry Details Found"});
+                 }
+                 else if(data.length==0){
+                     res.send({status:200,success:true,message:"No Enquiry Details Available"});
+                 }
+                 else{
+                     res.send({status:200,success:true,message:
+                     "Speed Details Found", data:data});
+                 }
+             });
+       }
+   })(req,res,next)
+ }
 
-{
-    passport.authenticate('jwt',function(err,admin)
-    {
-        if (err || !admin) 
-        {          
-            return res.json({ status: 401, success: false, message: "Authentication Fail." });
-        }
-        else if(admin){ 
-          enquiry.getAllEnquiry(function(err,data){
-                if(err){
-                    res.send({status:400,success:false,message:"No Enquiry Details Found"});
-                }
-                else if(data.length==0){
-                    res.send({status:200,success:true,message:"No Enquiry Details Available"});
-                }
-                else{
-                    res.send({status:200,success:true,message:
-                    "Speed Details Found", data:data});
-                }
-            });
-      }
-  })(req,res,next)
-}
+//  exports.getenquirylist=(req,res)=>{
+    //console.log("here are the all employees list");
+// exports.getAllenquiry((err,enquiry)=>{
+//         console.log("we are here it call me again and i wroking");
+//         if(err)
+//         res.send(err)
+//         console.log('enquiry',enquiry);
+//         res.send(enquiry)
+
+//     })
+// }
 
  

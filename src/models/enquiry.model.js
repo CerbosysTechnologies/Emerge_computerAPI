@@ -1,7 +1,7 @@
 const pool = require("../../authorization/config.js");
 
 var enquiry = function(enquiry){
-    this.s_no = enquiry.s_no
+    this.enquiry_id = enquiry.enquiry_id
     this.name = enquiry.name;
     this.mobile_number = enquiry.mobile_number;
     this.category = enquiry.category;
@@ -29,20 +29,18 @@ enquiry.createEnquiry=(enquiryReqdata,result)=>{
         
     }
 
-
-// //Get All Enquiry
-  enquiry.getAllEnquiry= function (result) {       
-    pool.query("select * from enquiry where  order by enquiry_id desc", function (err, res) {
-            if(err) {
-                console.log(err);
-                result(err, null);
+    enquiry.getAllenquiry=(result)=>{
+        pool.query('SELECT * FROM enquiry',(err,res)=>{
+            if(err){
+                console.log("err is occure while fetching data",err);
+                result(null,err);
             }
-            else{                       
-                result(null, res);
-
+            else{
+                console.log("employee fetching sucessfully");
+                result(null,res);
             }
-        });           
-}
+        })
+    }
 
 
     
