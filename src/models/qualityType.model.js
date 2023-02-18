@@ -27,4 +27,48 @@ const QualityType = function (qualitytype) {
   }
 
 
+
+    //Get All QualityType
+    QualityType.getAllQualityTypeM = function (result) {       
+        pool.query("select * from quality_type where status=1  order by quality_type_id desc", function (err, res) {
+                if(err) {
+                    console.log(err);
+                    result(err, null);
+                }
+                else{                       
+                    result(null, res);
+    
+                }
+            });           
+    }
+
+    //Get Quality Type ById
+    QualityType.getQualityTypeById = function (quality_type_id, result) {       
+    pool.query(`select * from quality_type Where status=1 and quality_type_id=?`,[quality_type_id], function (err, res) {
+            if(err) {
+                console.log(err);
+                result(err, null);
+            }
+            else{                       
+                result(null, res);
+
+            }
+        });           
+};
+
+//Update Quality Type 
+QualityType.updateQualityType = function (quality_type_id,qt,result) {       
+    pool.query("update quality_type SET quality_type_name=?,quality_type=?, modifiedById=?, modificationDate=? where quality_type_id=?", 
+    [qt.quality_type_name,qt.quality_type,qt.modifiedById, qt.modificationDate,quality_type_id], function (err, res) {
+            if(err) {
+                console.log(err);
+                result(err, null);
+            }
+            else{                       
+                result(null, {status:200,success:true,message:"Details Updated Successfully."});
+
+            }
+        });           
+};
+
   module.exports=QualityType;

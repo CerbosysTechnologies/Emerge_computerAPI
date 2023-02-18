@@ -5,7 +5,7 @@ var pool = mysql.createPool({
   port     :  3306,
   user     : 'root',
   password : 'root',
-  database : 'new_emergedb',
+  database : 'emergedb',
     // debug    :  false,
     // insecureAuth : true
 

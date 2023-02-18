@@ -1,5 +1,6 @@
 const mysql=require("mysql");
 const pool = require("../../authorization/config");
+const Capacity = require("./capacity.model");
 
 const Speed = function (speed) {
     this.speed_id = speed.speed_id;
@@ -30,7 +31,7 @@ Speed.insertSpeedM=function(speed,result){
 
   //Get All Speed
   Speed.getAllSpeedM = function (result) {       
-    pool.query("select * from speed where status=1", function (err, res) {
+    pool.query("select * from speed where status=1  order by speed_id desc", function (err, res) {
             if(err) {
                 console.log(err);
                 result(err, null);
@@ -71,6 +72,9 @@ Speed.updateSpeedM = function (speed_id,speed,result) {
             }
         });           
 };
+
+
+
 
 
   module.exports=Speed;

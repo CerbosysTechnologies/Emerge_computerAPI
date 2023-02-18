@@ -4,8 +4,8 @@ const passport = require('passport');
 const pool = require('./authorization/config');
 const router = require('./src/routes/routes'); 
 const expressLayouts =require('express-ejs-layouts');
-
 const app=express();
+
 app.use(expressLayouts)
 app.set('view engine', 'ejs');
 app.set('views','./views')
@@ -21,7 +21,7 @@ app.use("/checkout",require('./src/routes/razorpay.js'));
 
 
 
-const port=4020;
+const port=4021;
 
 
 app.listen(port,()=>{
