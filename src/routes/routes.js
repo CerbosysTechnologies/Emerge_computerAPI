@@ -64,7 +64,6 @@ const speedController = require('../controllers/speed.controller');
 const qualityTypeController = require('../controllers/quality_type.controller');
 const brandController = require('../controllers/brand.controller');
 const capacityController= require('../controllers/capacity.controller');
-
 const productController = require('../controllers/product.controller');
 
 //-----------------------Admin Api---------------------------
