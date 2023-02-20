@@ -1,3 +1,6 @@
+const jwt=require('jsonwebtoken')
+const passport=require('passport')
+require('../../authorization/passport')(passport)
 const login = require("../models/login.model.js");
 
 
@@ -16,13 +19,7 @@ exports.userLogin =(req,res)=>{
     return res.send({success:false, status:400, message:"Plz Enter digit value"})
       }
      
-    //   else  if(loginReqdata.mobile_number.length>5 || loginReqdata.mobile_number.length<11)
-    //   {
-    // //    err5.innerHTML = "Enter Only 10 digits";
-    // return res.send({success:false, status:400, message:"Plz Enter vaild mobile number"})
-   
-    //   }
-    else{
+     else{
         var mobile_number =loginReqdata.mobile_number
        login.checkdetails(mobile_number,function(err,result){
             if(err) throw err
@@ -46,9 +43,11 @@ exports.userLogin =(req,res)=>{
             }
             else
             {
-console.log("welcome =",+mobile_number);
-res.send({ status: true, message:"welcome", mobile_number });
-
+//console.log("welcome =",+mobile_number);
+//res.send({ status: true, message:"welcome", mobile_number });
+let payload={type:"user",mobile_number:result[0].mobile_number}
+let token=jwt.sign(payload,"shubham")
+return res.status(201).json({"token":token})
             }
 
         })
@@ -56,3 +55,21 @@ res.send({ status: true, message:"welcome", mobile_number });
     }
 
 }
+
+// module.exports.alldata=function(req,res,next)
+// {
+
+// passport.authenticate('jwt',function(err,user){
+
+// if(err||!user)
+// {
+//     console.log("authenticate fail")
+// }
+// else
+// {
+//     console.log("suuu")
+// }
+
+// })(req,res,next)
+
+// }

@@ -14,8 +14,11 @@ module.exports.searchProduct = function (req, res, next)   {
                 // LEFT JOIN category ON (category.category =enquiry.category) 
                 // LEFT JOIN
                 // where enquiry.name LIKE '%${name}%' and enquiry.statusId=1
-                // Order By enquiry.name DESC`
-                search_query= "select login.s_no,login.mobile_number , enquiry.quantity from login  inner join enquiry  on  login.s_no=login.s_no"
+                // // Order By enquiry.name DESC`
+                // search_query= "select login.s_no,login.mobile_number , enquiry.quantity from login  inner join enquiry  on  login.s_no=login.s_no"
+                // SELECT * FROM new WHERE CONCAT_WS('', column1, column2, column3) LIKE '%keyword%'
+
+
     
                 }
                 console.log('Query', search_query);
