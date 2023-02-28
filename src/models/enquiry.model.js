@@ -4,12 +4,13 @@ var enquiry = function(enquiry){
     this.enquiry_id = enquiry.enquiry_id
     this.name = enquiry.name;
     this.mobile_number = enquiry.mobile_number;
-    this.category = enquiry.category;
+    this.enquire_for = enquiry.enquire_for;
     this.quantity = enquiry.quantity;
     this.tenure = enquiry.tenure;
     this.statusId = enquiry.statusId;
     this.createdById = enquiry.createdById;
     this.creationDate = enquiry.creationDate
+    this.creationtime = enquiry.creationtime
     this.modifiedById = enquiry.modifiedById;
     this.modificationDate = enquiry.modificationDate 
   }
@@ -29,7 +30,7 @@ enquiry.createEnquiry=(enquiryReqdata,result)=>{
         
     }
 
-    enquiry.getAllenquiry=(result)=>{
+    enquiry.getAllEnquiry=(result)=>{
         pool.query('SELECT * FROM enquiry',(err,res)=>{
             if(err){
                 console.log("err is occure while fetching data",err);
@@ -41,6 +42,20 @@ enquiry.createEnquiry=(enquiryReqdata,result)=>{
             }
         })
     }
+
+// Get Enquiry By Name 
+enquiry.getEnquiryByName= function (name, result) {       
+    pool.query(`select * from enquiry Where name=?`,[name], function (err, res) {
+            if(err) {
+                console.log(err);
+                result(err, null);
+            }
+            else{                       
+                result(null, res);
+
+            }
+        });           
+};
 
 
     

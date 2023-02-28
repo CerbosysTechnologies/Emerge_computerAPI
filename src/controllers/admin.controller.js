@@ -14,7 +14,7 @@ exports.adminlogin = function (req, res) {
       res.send({
         status: 401,
         success: false,
-        message: "Something Went Worng.",
+        message: "Something Went Wrong.",
       });
     } else {
       console.log("The solution is: ", admin);
@@ -23,13 +23,13 @@ exports.adminlogin = function (req, res) {
         return res.json({
           status: 401,
           success: false,
-          message: "Email Does Not Exists. ",
+          message: "This Email Is Not A Valid Admin.", 
         });
       } else if (admin.length > 0) {
         var token = "";
-        var secretoKey = "";
-        secretoKey = {type: 'admin',ad_id:admin[0].ad_id, email:admin[0].email};
-        token = jwt.sign(secretoKey, "emergecomputer");
+        var secret = "";
+        secret = {type: 'admin',ad_id:user[0].ad_id, email:user[0].email};
+        token = jwt.sign(secret, "emergecomputer");
         res.send({
           status: 200,
           success: true,
