@@ -50,15 +50,15 @@ exports.createNewEnquiry = (req, res) => {
 };
 
 module.exports.getAllEnquiry = function (req, res, next) {
-  passport.authenticate("jwt", function (err, admin) {
-    if (err || !admin) {
+  passport.authenticate("jwt", function (err, user) {
+    if (err || !user) {
       return res.json({
         status: 401,
         success: false,
         message: "Authentication Fail.",
       });
-    } else if (admin) {
-      enquiry.getAllEnquiry(function (err, data) {
+    } else if (user) {
+      enquiry.getAllenquiry(function (err, data) {
         if (err) {
           res.send({
             status: 400,
@@ -75,7 +75,7 @@ module.exports.getAllEnquiry = function (req, res, next) {
           res.send({
             status: 200,
             success: true,
-            message: "Speed Details Found",
+            message: "Enquiry Details Found",
             data: data,
           });
         }
