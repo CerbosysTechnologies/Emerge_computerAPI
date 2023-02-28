@@ -29,7 +29,7 @@ enquiry.createEnquiry=(enquiryReqdata,result)=>{
         
     }
 
-    enquiry.getAllenquiry=(result)=>{
+    enquiry.getAllEnquiry=(result)=>{
         pool.query('SELECT * FROM enquiry',(err,res)=>{
             if(err){
                 console.log("err is occure while fetching data",err);
@@ -41,6 +41,20 @@ enquiry.createEnquiry=(enquiryReqdata,result)=>{
             }
         })
     }
+
+// Get Enquiry By Name 
+enquiry.getEnquiryByName= function (name, result) {       
+    pool.query(`select * from enquiry Where name=?`,[name], function (err, res) {
+            if(err) {
+                console.log(err);
+                result(err, null);
+            }
+            else{                       
+                result(null, res);
+
+            }
+        });           
+};
 
 
     

@@ -40,13 +40,13 @@ exports.createNewEnquiry =(req,res)=>{
 
  module.exports.getAllEnquiry= function(req,res,next)
  {
-     passport.authenticate('jwt',function(err,admin)
+     passport.authenticate('jwt',function(err,user)
      {
-         if (err || !admin)
+         if (err || !user)
          {
              return res.json({ status: 401, success: false, message: "Authentication Fail." });
          }
-         else if(admin){
+         else if(user){
            enquiry.getAllEnquiry(function(err,data){
                  if(err){
                      res.send({status:400,success:false,message:"No Enquiry Details Found"});
@@ -56,23 +56,38 @@ exports.createNewEnquiry =(req,res)=>{
                  }
                  else{
                      res.send({status:200,success:true,message:
-                     "Speed Details Found", data:data});
+                     "Enquiry Details Found", data:data});
                  }
              });
        }
    })(req,res,next)
  }
 
-//  exports.getenquirylist=(req,res)=>{
-    //console.log("here are the all employees list");
-// exports.getAllenquiry((err,enquiry)=>{
-//         console.log("we are here it call me again and i wroking");
-//         if(err)
-//         res.send(err)
-//         console.log('enquiry',enquiry);
-//         res.send(enquiry)
 
-//     })
-// }
+ // Get Enquiry By Name
+module.exports.getEnquiryByName = function(req,res,next)
+{
+    passport.authenticate('jwt',function(err,user)
+    {
+        if (err || !user) 
+        {          
+            return res.json({ status: 401, success: false, message: "Authentication Fail." });
+        }
+        else if(user){ 
+         enquiry.getEnquiryByName(req.params.name,function(err,data){
+                if(err){
+                    res.send({status:400,success:false,message:"No Detail Found"});
+                }
+                else if(data.length==0){
+                    res.send({status:200,success:true,message:"No Detail Available"});
+                } 
+                else{
+                    res.send({status:200,success:true,message:
+                    "Detail Found", data:data});
+                }
+            });
+       }
+  })(req,res,next)
+};
 
  

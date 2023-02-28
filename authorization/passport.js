@@ -7,10 +7,10 @@ const jwt=require('jsonwebtoken');
 module.exports=function(passport){
     let opts={};
     opts.jwtFromRequest=ExtractJwt.fromAuthHeaderAsBearerToken(); 
-    opts.secretOrKey="shubham";
+    opts.secretOrKey="emergecomputer";
     passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
         console.log('Type=>', jwt_payload.type);
-        console.log("JWT ID=>", jwt_payload.mobile_number);
+        console.log("JWT ID=>", jwt_payload.ad_id);
         console.log("JWT Password=>", jwt_payload.email);
 
     
