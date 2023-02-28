@@ -2,6 +2,7 @@ const express=require('express');
 const passport=require('passport');
 const multer=require('multer');
 const util =require('util');
+const path=require('path')
 
 
 require('../../authorization/passport')(passport)
@@ -56,19 +57,19 @@ let uploadProdut = multer({storage: storageProduct}).fields([{name:'product_imag
 //////////////////////
 
 
-//.............................................Gaming cpu images....................................
+//.............................................shopping cart....................................
 var storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, path.join ('')
+    callback(null, path.join ('public/cart')
 )},
 filename:function(req,file,cb){
   cb(null,file.originalname)
   //console.log(file,"hedgfsfsdfg")
 }
 });
-var upload_5 = multer({ storage: storage }).array("image",10);
-var uploadgcpuMiddleware = util.promisify(upload_5);
-module.exports = uploadgcpuMiddleware;
+var upload_5 = multer({ storage: storage }).array("product_image",10);
+var uploadMiddleware = util.promisify(upload_5);
+module.exports = uploadMiddleware;
 
 /////////////////////////////////////////////////////////
 
@@ -79,7 +80,7 @@ const colorController = require('../controllers/color.controller');
 const adminController = require("../controllers/admin.controller"); 
 const logincontroller=  require('../controllers/login.controller')
 const enquirecontroller = require('../controllers/enquiry.controller.js')
-const visitorcontroller =require('../controllers/visitor.controller')
+const addresscontroller =require('../controllers/address.controller')
 const searchcontroller = require('../controllers/search.controller')
 const productTypeController= require('../controllers/product_type.controller');
 const speedController = require('../controllers/speed.controller');
@@ -90,7 +91,10 @@ const ordercontrollerr= require('../controllers/order.controller');
 const orderdetailcontroller= require('../controllers/orderdetails.controller');
 
 const productController = require('../controllers/product.controller');
-
+const paymentcontroller = require('../controllers/paymentdetails.controller')
+const shoppingcartcontroller=require("../controllers/shopingcart.controller")
+const wishlistcontroller = require("../controllers/wishlist.controller")
+const getallproduct = require("../controllers/getproduct.controller")
 //-----------------------Admin Api---------------------------
 router.post("/adminLogin",adminController.adminlogin);
 
@@ -130,7 +134,7 @@ router.get("/getQualityTypeById/:quality_type_id",qualityTypeController.getQuali
 router.put("/updateQualiType/:quality_type_id",qualityTypeController.updateQualityType);
 
 //add product
-router.post("/addproduct",uploadgcpuMiddleware,productController.insertProduct)
+//router.post("/addproduct",uploadMiddleware,productController.insertProduct)
 
 
 //-----------------------Brand Api---------------------------
@@ -168,25 +172,47 @@ router.get("/getAllEnquiry",enquirecontroller.getAllEnquiry);
 
 
 
-router.post('/visitor',visitorcontroller.visitorLogin)
+router.post('/address',addresscontroller.visitorLogin)
 router.get('/searchproduct',searchcontroller.searchProduct)
 //..............orderdetails Api......................
-router.post('/insertOrderDetail',orderdetailcontroller.insertOrderdetail)
+router.post('/insertOrderDetail',orderdetailcontroller.oderdata)
 
 
 //..............payment chechkout details......................
-//router.get('/paymentdetails',paymentcontroller.getpaymentdetails)
+router.get('/paymentdetails',paymentcontroller.getpaymentdetails)
 
 //-------------------order api-----------------------------------
 router.post("/insertorder",ordercontrollerr.createorder)
 
 
+//...................shopping cart..................................
+
+router.post("/addToCart",uploadMiddleware,shoppingcartcontroller.addcart)
+router.get("/clearcart",shoppingcartcontroller.clearcart)
+router.get("/getcartitmes",shoppingcartcontroller.totalcartitem)
+router.get("/gettotalquantity",shoppingcartcontroller.gettotalqantity)
+router.get("/allcartitems",shoppingcartcontroller.UserCartItems)
+
+//......................wishlist api ..................................
+router.post("/addwishlist",wishlistcontroller.createWishlist)
+router.get("/deletewishlist",wishlistcontroller.deleteWishlist)
 
 
 
 
 
 
+//............Get product api ............
+
+
+router.get("/getallmoniter",getallproduct.getmoniter)
+router.get("/getalllaptop",getallproduct.getlaptop)
+router.get("/getmouse",getallproduct.getmouse)
+router.get("/getkeyboard",getallproduct.getkeyboard)
+router.get("/getcpu",getallproduct.getcpu)
+router.get("/getgamingcpu",getallproduct.getgamingcpu)
+router.get("/getharddisk",getallproduct.getHarddisk)
+router.get("/getcomputer",getallproduct.getcomputer)
 
 
 

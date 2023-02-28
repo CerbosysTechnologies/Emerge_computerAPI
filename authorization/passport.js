@@ -7,7 +7,7 @@ const jwt=require('jsonwebtoken');
 module.exports=function(passport){
     let opts={};
     opts.jwtFromRequest=ExtractJwt.fromAuthHeaderAsBearerToken(); 
-    opts.secretOrKey="shubham";
+    opts.secretOrKey="emergecomputer";
     passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
         console.log('Type=>', jwt_payload.type);
         console.log("JWT ID=>", jwt_payload.mobile_number);
@@ -34,8 +34,9 @@ module.exports=function(passport){
 
         }
 
-        else if(jwt_payload.type == 'user'){
-            pool.query("select * from login where  mobile_number=?",
+        if(jwt_payload.type=='user'){
+            
+            pool.query("select * from user where  mobile_number=?",
             +jwt_payload.mobile_number, function(err,result)
             {
                 if(err) throw err;
@@ -53,6 +54,10 @@ module.exports=function(passport){
                     return done(null,false, { message: 'Invalid request.' });
                 }
             }); 
+        }
+        else
+        {
+            console.log("err")
         }
     }))
 

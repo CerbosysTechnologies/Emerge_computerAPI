@@ -13,8 +13,8 @@ exports.createNewEnquiry =(req,res)=>{
     else  if(!enquiryReqdata.mobile_number){
         return res.send({success:false, status:400, message:"please fill number "})
     }
-    else  if(!enquiryReqdata.category){
-        return res.send({success:false, status:400, message:"please select category "})
+    else  if(!enquiryReqdata.enquire_for){
+        return res.send({success:false, status:400, message:"please select product type "})
     }
     else  if(!enquiryReqdata.quantity){
         return res.send({success:false, status:400, message:"please select quantity "})
@@ -27,12 +27,19 @@ exports.createNewEnquiry =(req,res)=>{
         
         enquiryReqdata.statusId=1;
         enquiryReqdata.creationDate=new Date()
+        enquiryReqdata.creationtime=new Date()
         enquiryReqdata.modificationDate=new Date()
          console.log("vaild data success");
          enquiry.createEnquiry(enquiryReqdata,(err,enquiry)=>{
              if(err)
-             res.send(err);
-             res.json({status:true, message:"created", data:enquiry})
+             {
+                res.send({status:400,success:false,message:" Enquiry Details can not send"});
+             }
+             else{
+                res.json({status:true, message:"created", data:enquiry})
+             }
+             
+             
              
          })
      }
@@ -55,8 +62,7 @@ exports.createNewEnquiry =(req,res)=>{
                      res.send({status:200,success:true,message:"No Enquiry Details Available"});
                  }
                  else{
-                     res.send({status:200,success:true,message:
-                     "Speed Details Found", data:data});
+                     res.send({status:200,success:true,message:"Speed Details Found", data:data});
                  }
              });
        }

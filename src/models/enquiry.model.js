@@ -4,12 +4,13 @@ var enquiry = function(enquiry){
     this.enquiry_id = enquiry.enquiry_id
     this.name = enquiry.name;
     this.mobile_number = enquiry.mobile_number;
-    this.category = enquiry.category;
+    this.enquire_for = enquiry.enquire_for;
     this.quantity = enquiry.quantity;
     this.tenure = enquiry.tenure;
     this.statusId = enquiry.statusId;
     this.createdById = enquiry.createdById;
     this.creationDate = enquiry.creationDate
+    this.creationtime = enquiry.creationtime
     this.modifiedById = enquiry.modifiedById;
     this.modificationDate = enquiry.modificationDate 
   }
