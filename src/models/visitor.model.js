@@ -4,7 +4,7 @@ const pool = require("../../authorization/config");
 var register = function(register){
    this.visitor_id=register.visitor_id
     this.name=register.name
-    this.mobile_number=register.mobile_number
+    this.user_number=register.user_number
     this.pincode=register.pincode
     this.Locality=register.Locality
     this.address=register.address
@@ -19,7 +19,7 @@ var register = function(register){
    }
 
    register.createvisitor=(visitorReqdata,result)=>{
-    pool.query('INSERT INTO visitor_registraion SET ?',visitorReqdata,(err,res)=>{
+    pool.query('INSERT INTO address SET ?',visitorReqdata,(err,res)=>{
         if(err){
             console.log("eror while inserting data ");
             result(null,err)
@@ -31,9 +31,9 @@ var register = function(register){
     })
 
 }
-register.checkdetails=function(mobile_number,result)
+register.checkdetails=function(user_number,result)
 {
-    pool.query("select * from visitor_registraion where mobile_number=?",mobile_number,function(err,res){
+    pool.query("select * from address where user_number=?",user_number,function(err,res){
         if(err)
         result(null,err)
         else

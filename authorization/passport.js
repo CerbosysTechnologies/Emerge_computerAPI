@@ -34,8 +34,9 @@ module.exports=function(passport){
 
         }
 
-        else if(jwt_payload.type == 'user'){
-            pool.query("select * from login where  mobile_number=?",
+        if(jwt_payload.type=='user'){
+            
+            pool.query("select * from user where  mobile_number=?",
             +jwt_payload.mobile_number, function(err,result)
             {
                 if(err) throw err;
@@ -53,6 +54,10 @@ module.exports=function(passport){
                     return done(null,false, { message: 'Invalid request.' });
                 }
             }); 
+        }
+        else
+        {
+            console.log("err")
         }
     }))
 
